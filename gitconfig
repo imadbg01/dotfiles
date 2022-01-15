@@ -1,0 +1,192 @@
+[user]
+    name = imad bg
+    email = imadbg01@users.noreply.github.com
+
+[core]
+    editor = nvim
+    pager = less -R -F -X
+    excludesfile = ~/.gitignore
+    whitespace = trailing-space,space-before-tab,blank-at-eof
+    trustctime = false
+    precomposeunicode = false
+
+[init]
+    defaultBranch = segma
+
+[commit]
+    template = ~/.gitmessage
+
+[push]
+    default = upstream
+
+[rebase]
+    autosquash = true
+
+[pull]
+    rebase = true
+
+[merge]
+    conflictstyle = diff3
+    ff = true
+    tool = fugitive
+
+[mergetool "nvim"]
+    prompt = false
+    cmd = nvim -f -c \"Gvdiff\" \"$MERGED\"
+
+[diff]
+    algorithm = patience
+    compactionHeuristic = true
+    renames = copies
+    tool = vimdiff
+
+[difftool "nvim"]
+    prompt = false
+    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
+[difftool "ksdiff"]
+  cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
+[log]
+    abbrevCommit = true
+    decorate = short
+    date = local
+
+[pretty]
+    default = "format:%Cgreen%h%Creset %<(52,trunc)%s  %cn %ar %Cred%d%Creset"
+    changelog = "format:* %s"
+
+[advice]
+    statusHints = false
+
+[color]
+    ui = true
+
+[apply]
+    whitespace = fix
+
+[rerere]
+    enabled = 1
+
+[alias]
+    git = !exec git
+    edit = config --global -e
+
+    contributers = authors --list
+
+    c = commit
+    fix = commit --fixup
+    amend = commit --amend
+    reword = commit --amend -v
+
+    d = diff
+    dw = diff --word-diff=color
+    ds = diff --staged
+    dsw = diff --staged --word-diff=color
+    staged = diff --staged
+    compare = diff main..HEAD
+    last = diff -R HEAD..HEAD^
+    changed = diff --stat
+    conflicts = diff --name-only --diff-filter=U
+
+    dt = difftool
+    dts = difftool --staged
+
+    a = add
+    patch = add --patch
+
+    b = branch
+    co = checkout
+    list = branch -a -vv
+    delete = branch -d
+    delete-remote = push --delete
+    rename = branch -m
+    new = checkout -b
+    switch = checkout
+    discard = checkout --
+    praise = blame
+
+    cp = cherry-pick -x
+
+    f = fetch
+    fa = fetch --all
+
+    grep-group = grep --break --heading --line-number
+
+    l = log --graph --pretty=default
+    added = log --diff-filter=A
+    changed-files = log --stat --oneline
+    changes = log --pretty=changelog
+    overview = log --graph --branches --remotes --tags --pretty=default --date-order
+    unmerged = log --no-merges master..
+    today = log -u --name-only --since='1 day ago' --remotes --branches --date-order --tags --pretty=default
+
+    tracked = ls-files
+    untracked = ls-files --others --exclude-standard
+    ignored = ls-files --others --exclude-standard --ignored
+
+    m = merge
+    mt = mergetool
+
+    pl = pull
+    plm = pull origin master
+    pla = pull --all
+    plm = pull --no-rebase
+    pull-merge = pull --no-rebase
+
+    p = push
+    pm = push origin master
+
+    rb = rebase
+    rbi = rebase --interactive
+
+    re = reset
+    unstage = reset -q HEAD --
+    uncommit = reset --mixed HEAD~
+
+    untrack = rm --cached
+
+    r = revert
+    forgive = revert -n HEAD --
+
+    s = status --short --branch --show --untracked-files
+
+    save = stash --all --include-untracked
+    stashes = stash list
+
+    t = tag -n
+    last-tag = describe --tags --abrev=0
+
+    home = "!open `git remote -v | grep fetch | head -n1 | awk '{print $2}' | sed 's/git@/https:\\/\\//' | sed 's/\\.com:/\\.com\\//'`"
+
+    bf = "!git checkout $(git for-each-ref refs/heads/ --format='%(refname:short)' | fzf)"
+
+[url "git@github.com:"]
+    insteadOf = "gh:"
+    insteadOf = "github:"
+    pushInsteadOf = "https://github.com/"
+
+[url "git@gist.github.com:"]
+    insteadOf = "gist:"
+    pushInsteadOf = "https://gist.github.com/"
+
+[github]
+    user = imadbg01
+
+[ghq]
+    root = ~/Developer/go/src
+    root = ~/Developer/repos
+
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+
+[lfs "extension.git-crypt"]
+    clean = git-crypt clean
+    smudge = git-crypt smudge
+    priority = 0
+
+[lfs "extension.git-crypt.diff"]
+    textconv = git-crypt diff
