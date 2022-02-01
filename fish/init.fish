@@ -1,7 +1,25 @@
+# No, no, no!
+status --is-interactive; or exit 1
+
 # PATH
-set -x GOPATH /home/imad/go
+set -x GOPATH $HOME/go
 set -x PATH $PATH /usr/local/go/bin $GOPATH/bin
 set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
+set -U fish_user_paths $HOME/flutter/bin $fish_user_paths
+
+# Base
+set -x EDITOR 'nvim'
+set -x VISUAL $EDITOR
+set -x PAGER 'less -R'
+set -x MANPAGER 'less -X'
+set -x LESS '--ignore-case --chop-long-lines --long-prompt --silent'
+set -x GREP_OPTIONS '--color=auto'
+set -x LSCOLORS 'ExGxBxDxCxEgEdxbxgxcxd'
+set -x LANG 'en_US.UTF-8'
+set -x LC_CTYPE 'en_US.UTF-8'
+set -x LC_MESSAGES 'en_US.UTF-8'
+set -x LC_COLLATE 'C'
+
 
 
 # Aliases
