@@ -1,0 +1,40 @@
+[global_config]
+  title_hide_sizetext = True
+  title_transmit_fg_color = "#080808"
+  title_transmit_bg_color = "#ededed"
+  title_inactive_bg_color = "#ededed"
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  suppress_multiple_term_dialog = True
+[keybindings]
+[profiles]
+  [[default]]
+    allow_bold = False
+    background_darkness = 0.875
+    background_type = transparent
+    cursor_shape = ibeam
+    font = Fira Code 16
+    foreground_color = "#00ff00"
+    show_titlebar = False
+    scrollbar_position = hidden
+    scrollback_lines = 5120
+    scrollback_infinite = True
+    use_system_font = False
+    copy_on_selection = True
+[layouts]
+  [[default]]
+    [[[window0]]]
+      type = Window
+      parent = ""
+      size = 1100, 1600
+    [[[pane0]]]
+      type = VPaned
+      parent = window0
+    [[[child1]]]
+      type = Terminal
+      parent = pane0
+      profile = default
+    [[[child2]]]
+      type = Terminal
+      parent = pane0
+      profile = default
+[plugins]
