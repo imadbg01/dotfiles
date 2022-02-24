@@ -1,0 +1,3 @@
+# terminator config 
+
+![](./terminator.git)
