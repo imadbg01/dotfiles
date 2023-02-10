@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{pkgs, lib , ...}:
 
 {
 
@@ -14,16 +14,15 @@
 	
 	vim-nix
 
+        {
+          plugin = nightfox-nvim ;
+          config = lib.fileContents ./config/colors.vim;
+
+        }
 
     ];
 
-    extraConfig = ''
-
-                  set number
-                  set relativenumber
-
-                  '';
-
+    extraConfig = lib.fileContents ./config/init.vim; 
 
   };
 

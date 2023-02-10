@@ -55,9 +55,9 @@ imports = [
   # Packages that should install to user profile
   home.packages = with pkgs; [
     abook
+    lynis
     curl
     wget
-    lsd
     wezterm
     fish
     yt-dlp
@@ -70,20 +70,16 @@ imports = [
     pitivi
     imagemagick
 
-    apg
     bat
     zip
     xclip
     #widevine-cdm
-    urlscan
-    urlview
     librewolf
     neofetch
     fira-code
     fira-code-symbols
 
 
-    gcc
     elixir
 
     # Lsp
