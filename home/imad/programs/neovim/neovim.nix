@@ -20,10 +20,27 @@
 
         }
 
-    ];
+        # tree-sitter
 
+        {
+
+          plugin = nvim-treesitter.withAllGrammars;
+          config = lib.fileContents ./config/treesitter.vim;
+        }
+
+        {
+          plugin = telescope-nvim;
+          config = lib.fileContents ./config/telescope.vim;
+        }
+    ];
+    
     extraConfig = lib.fileContents ./config/init.vim; 
 
+    extraPackages = with pkgs; [
+      tree-sitter
+      ripgrep
+  
+    ];
   };
 
 }

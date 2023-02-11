@@ -71,6 +71,7 @@ imports = [
     imagemagick
 
     bat
+    fd
     zip
     xclip
     #widevine-cdm
@@ -81,7 +82,9 @@ imports = [
 
 
     elixir
-
+    zig
+    gcc
+    nodejs
     # Lsp
     rnix-lsp
     nixpkgs-fmt

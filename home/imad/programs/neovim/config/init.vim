@@ -9,8 +9,6 @@ set spell
 set smartcase
 set autowrite
 set autoindent
-set titlestring="Yes Master!"
-set title
 set confirm
 set history=82
 set nobackup
@@ -20,7 +18,6 @@ set nomodeline
 set noshelltemp
 set noundofile
 set viminfo=
-set noautoread
 set showcmd
 set wildmenu
 set wildmode=longest,list,full
@@ -42,7 +39,7 @@ set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 let mapleader = " "
 
 nnoremap <leader>q :Ex<CR><Esc>
-nnoremap <Esc>:nohlsearch<Esc>
+nnoremap <Esc> :nohlsearch<Esc>
 
 
 let g: loaded_prel_provider=0
