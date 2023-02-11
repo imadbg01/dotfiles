@@ -1,4 +1,11 @@
-nnoremap <leader>ff Telescope find_files<cr>
-nnoremap <leader>fg Telescope live_grep<cr>
-nnoremap <leader>fb Telescope buffers<cr>
-nnoremap <leader>fh Telescope help_tags<cr>
+lua << EOF
+
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>fc', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+
+EOF
+
+

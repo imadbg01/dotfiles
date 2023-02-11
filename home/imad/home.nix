@@ -7,14 +7,14 @@
   home.username = "imad";
   home.homeDirectory = "/home/imad";
 
-imports = [
-      ./programs/helix/helix.nix
-      ./programs/neovim/neovim.nix
-      ./programs/firefox/firefox.nix
-      ./programs/git/git.nix
-      ./programs/go/go.nix
+  imports = [
+    ./programs/helix/helix.nix
+    ./programs/neovim/neovim.nix
+    ./programs/firefox/firefox.nix
+    ./programs/git/git.nix
+    ./programs/go/go.nix
 
-];
+  ];
   gtk = {
     enable = true;
 
@@ -30,25 +30,25 @@ imports = [
 
   # xdg 
   xdg = {
-      userDirs = {
-        enable = true;
-        createDirectories = true;
-        publicShare = null;
-        templates = null;
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+      publicShare = null;
+      templates = null;
 
-        extraConfig = {
+      extraConfig = {
 
-          XDG_DOTFILES_DIR = "${config.home.homeDirectory}/dotfiles";
-          XDG_MISC_DIR = "${config.home.homeDirectory}/misc";
-          XDG_BIN_DIR = "${config.home.homeDirectory}/bin";
-          XDG_DEV_DIR = "${config.home.homeDirectory}/Dev";
-          XDG_PROJECTS_DIR = "${config.home.homeDirectory}/Projects";
-          XDG_WHATEVER_DIR = "${config.home.homeDirectory}/whatever";
-    
-        };
+        XDG_DOTFILES_DIR = "${config.home.homeDirectory}/dotfiles";
+        XDG_MISC_DIR = "${config.home.homeDirectory}/misc";
+        XDG_BIN_DIR = "${config.home.homeDirectory}/bin";
+        XDG_DEV_DIR = "${config.home.homeDirectory}/Dev";
+        XDG_PROJECTS_DIR = "${config.home.homeDirectory}/Projects";
+        XDG_WHATEVER_DIR = "${config.home.homeDirectory}/whatever";
 
       };
-  
+
+    };
+
 
   };
 
@@ -90,6 +90,7 @@ imports = [
     nixpkgs-fmt
     elixir_ls
     ltex-ls
+    nil
 
     nodePackages_latest.typescript
     nodePackages_latest.typescript-language-server
