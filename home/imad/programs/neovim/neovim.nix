@@ -33,7 +33,7 @@
 
         {
 
-          plugin = nvim-treesitter.withAllGrammars;
+          plugin = nvim-treesitter;
           config = lib.fileContents ./config/treesitter.vim;
         }
 
@@ -78,6 +78,10 @@
       ripgrep
       gopls
       zls
+      rnix-lsp
+      nixpkgs-fmt
+      ltex-ls
+      nil
   
     ];
   };

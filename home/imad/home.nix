@@ -10,23 +10,14 @@
   imports = [
     ./programs/helix/helix.nix
     ./programs/neovim/neovim.nix
+    ./programs/wezterm/wezterm.nix
+    ./programs/bash/bash.nix
     ./programs/firefox/firefox.nix
     ./programs/git/git.nix
     ./programs/go/go.nix
+    ./programs/fish/fish.nix
 
   ];
-  gtk = {
-    enable = true;
-
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = true;
-
-    };
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = true;
-
-    };
-  };
 
   # xdg 
   xdg = {
@@ -58,8 +49,6 @@
     lynis
     curl
     wget
-    wezterm
-    fish
     yt-dlp
     gnome.gnome-tweaks
     gnome.dconf-editor
@@ -69,7 +58,7 @@
     ffmpeg_5
     pitivi
     imagemagick
-
+    simplescreenrecorder
     bat
     fd
     zip
@@ -82,21 +71,17 @@
 
 
     elixir
+    erlang
+    elixir_ls
     zig
     gcc
     nodejs
     # Lsp
-    rnix-lsp
-    nixpkgs-fmt
-    elixir_ls
-    ltex-ls
-    nil
 
     nodePackages_latest.typescript
     nodePackages_latest.typescript-language-server
     nodePackages_latest.bash-language-server
     nodePackages_latest.vscode-langservers-extracted
-
   ];
 
 

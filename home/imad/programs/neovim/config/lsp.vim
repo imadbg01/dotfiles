@@ -3,8 +3,7 @@ lua << EOF
 local nvim_lsp = require('lspconfig')
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-local servers = {"tsserver", "elixirls", "rnix", "cssls", "bashls","gopls","html", "jsonls","ltex", "nil_ls","svelte", "vimls", "zls"}
-
+local servers = {"tsserver",  "rnix", "cssls", "bashls","gopls","html", "jsonls","ltex", "nil_ls","svelte", "vimls", "zls"}
 
 
 local on_attach = function(client, bufnr)
@@ -107,6 +106,12 @@ for _, lsp in pairs(servers) do
     })
 end
 
+
+nvim_lsp.elixirls.setup {
+	cmd = {"/home/imad/.nix-profile/bin/elixir-ls"},
+    capabilities = capabilities,
+    
+    }
 vim.lsp.set_log_level("debug")
 
 

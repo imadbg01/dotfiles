@@ -19,8 +19,6 @@ set nomodeline
 set noshelltemp
 set noundofile
 set viminfo=
-set showcmd
-set wildmenu
 set wildmode=longest,list,full
 filetype plugin indent on
 set cursorline
