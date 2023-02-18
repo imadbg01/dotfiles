@@ -13,7 +13,8 @@
 
     plugins = with pkgs.vimPlugins; [
 	
-	vim-nix
+    plenary-nvim
+  	vim-nix
     nvim-cmp
     cmp-nvim-lsp
     cmp-buffer
@@ -82,6 +83,21 @@
       nixpkgs-fmt
       ltex-ls
       nil
+
+      nodePackages_latest.typescript
+      nodePackages_latest.typescript-language-server
+      nodePackages_latest.bash-language-server
+      nodePackages_latest.vscode-langservers-extracted
+      # elm
+      elmPackages.elm-language-server
+      elmPackages.elm-verify-examples
+      elmPackages.elm-doc-preview
+      elmPackages.nodejs
+      elmPackages.elm-xref
+      elmPackages.elm-test
+      elmPackages.elm-live
+      elmPackages.elm-review
+      elmPackages.elm-format
   
     ];
   };

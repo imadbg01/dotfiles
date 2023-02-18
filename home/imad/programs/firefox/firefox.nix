@@ -14,9 +14,10 @@
 
 
       };
-
+      extraNativeMessagingHosts = with pkgs.nur.repos.wolfangaukang; [ vdhcoapp ];
     };
   };
 
+    home.packages = with pkgs.nur.repos.wolfangaukang; [ vdhcoapp ];
 
 }

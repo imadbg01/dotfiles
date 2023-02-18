@@ -81,6 +81,8 @@
   };
 
 
+
+
   # gnome remove packages
   environment.gnome.excludePackages = (with pkgs; [
     gnome-photos
@@ -129,7 +131,7 @@
     isNormalUser = true;
     description = "imad";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
+    packages =  [
     ];
   };
 

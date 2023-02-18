@@ -3,7 +3,7 @@ lua << EOF
 local nvim_lsp = require('lspconfig')
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-local servers = {"tsserver",  "rnix", "cssls", "bashls","gopls","html", "jsonls","ltex", "nil_ls","svelte", "vimls", "zls"}
+local servers = {"tsserver",  "rnix", "cssls", "bashls","gopls","html", "jsonls","ltex", "nil_ls","svelte", "vimls", "zls", "elmls", "emmet_ls"}
 
 
 local on_attach = function(client, bufnr)

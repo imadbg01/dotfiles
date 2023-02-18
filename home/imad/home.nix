@@ -8,7 +8,6 @@
   home.homeDirectory = "/home/imad";
 
   imports = [
-    ./programs/helix/helix.nix
     ./programs/neovim/neovim.nix
     ./programs/wezterm/wezterm.nix
     ./programs/bash/bash.nix
@@ -16,7 +15,7 @@
     ./programs/git/git.nix
     ./programs/go/go.nix
     ./programs/fish/fish.nix
-
+    ./programs/starship/starship.nix
   ];
 
   # xdg 
@@ -49,41 +48,47 @@
     lynis
     curl
     wget
-    yt-dlp
-    gnome.gnome-tweaks
-    gnome.dconf-editor
     zeal
+    prowlarr
+    file 
+    killall
 
     vlc
     ffmpeg_5
     pitivi
     imagemagick
     simplescreenrecorder
+    digikam
     bat
     fd
     zip
+    unzip
     xclip
+    ripgrep
+    bats
     #widevine-cdm
     librewolf
     neofetch
+    pfetch
     fira-code
     fira-code-symbols
 
 
+    python3
     elixir
     erlang
     elixir_ls
     zig
     gcc
     nodejs
-    # Lsp
+    elmPackages.elm
+    python310Packages.jupyterlab
 
-    nodePackages_latest.typescript
-    nodePackages_latest.typescript-language-server
-    nodePackages_latest.bash-language-server
-    nodePackages_latest.vscode-langservers-extracted
   ];
 
+  programs.bottom = {
+    enable = true;
+  };
 
 
   # Home Manager elease.
@@ -91,5 +96,14 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+
+  nixpkgs.config.packageOverrides = pkgs: {
+    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+      inherit pkgs;
+    };
+  };
+
+
 
 }
