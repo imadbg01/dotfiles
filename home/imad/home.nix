@@ -1,6 +1,5 @@
 { config, pkgs, ... }:
 
-
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -40,7 +39,6 @@
 
     };
 
-
   };
 
   # Packages that should install to user profile
@@ -70,7 +68,6 @@
     pfetch
     fira-code
 
-
     python3
     elixir
     erlang
@@ -85,10 +82,7 @@
     python310Packages.jupyterlab
   ];
 
-  programs.bottom = {
-    enable = true;
-  };
-
+  programs.bottom = { enable = true; };
 
   # Home Manager elease.
   home.stateVersion = "22.11";
@@ -96,19 +90,17 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-
   nixpkgs.config.packageOverrides = pkgs: {
-    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-      inherit pkgs;
-    };
+    nur = import (builtins.fetchTarball
+      "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+        inherit pkgs;
+      };
   };
-
 
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz";
+      url =
+        "https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz";
     }))
   ];
 }
-
-

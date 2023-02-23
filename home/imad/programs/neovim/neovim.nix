@@ -44,26 +44,17 @@
       nvim-autopairs
 
 
-      # md preview
-      {
-        plugin = glow-nvim;
-        config = lib.fileContents ./config/glow.vim;
-      }
+      glow-nvim
 
-      # Telescope
-      {
-        plugin = telescope-nvim;
-        config = lib.fileContents ./config/telescope.vim;
-      }
+      telescope-nvim
 
 
 
-      # null-ls
-      {
-        plugin = null-ls-nvim;
-        config = lib.fileContents ./config/null_ls.vim;
+      null-ls-nvim
 
-      }
+      nvim-tree-lua
+
+      lualine-nvim
 
       # colorizer
       {
@@ -75,29 +66,10 @@
         plugin = dressing-nvim;
         config = lib.fileContents ./config/dressing.vim;
       }
-      # bufferline
-      {
-        plugin = bufferline-nvim;
-        config = lib.fileContents ./config/bufferline.vim;
-      }
-      {
-        plugin = trouble-nvim;
-        config = lib.fileContents ./config/trouble.vim;
+      bufferline-nvim
+      trouble-nvim
 
-      }
 
-      {
-        plugin = nvim-tree-lua;
-        config = lib.fileContents ./config/tree.vim;
-      }
-      {
-        plugin = alpha-nvim;
-        config = lib.fileContents ./config/alpha.vim;
-      }
-      {
-        plugin = lualine-nvim;
-        config = lib.fileContents ./config/lualine.vim;
-      }
       # Haskell tools
       haskell-tools-nvim
     ];
@@ -111,10 +83,14 @@
       gopls
       zls
       rnix-lsp
-      nixpkgs-fmt
       ltex-ls
       sumneko-lua-language-server
       stylua
+      html-tidy
+      nodePackages.stylelint
+      cbfmt
+      nixfmt
+      dprint
     ];
   };
 
