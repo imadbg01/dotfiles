@@ -16,6 +16,7 @@
     ./programs/go/go.nix
     ./programs/fish/fish.nix
     ./programs/starship/starship.nix
+    ./programs/nushell/nushell.nix
   ];
 
   # xdg 
@@ -44,14 +45,13 @@
 
   # Packages that should install to user profile
   home.packages = with pkgs; [
-    abook
     lynis
     curl
     wget
     zeal
-    prowlarr
-    file 
+    file
     killall
+    glow
 
     vlc
     ffmpeg_5
@@ -66,24 +66,23 @@
     xclip
     ripgrep
     bats
-    #widevine-cdm
     librewolf
-    neofetch
     pfetch
     fira-code
-    fira-code-symbols
 
 
     python3
     elixir
     erlang
     elixir_ls
+    nim
+    nimlsp
     zig
     gcc
     nodejs
-    elmPackages.elm
-    python310Packages.jupyterlab
+    stack
 
+    python310Packages.jupyterlab
   ];
 
   programs.bottom = {
@@ -105,5 +104,11 @@
   };
 
 
-
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = "https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz";
+    }))
+  ];
 }
+
+

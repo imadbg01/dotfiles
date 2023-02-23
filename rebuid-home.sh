@@ -2,6 +2,6 @@
 
 pushd ~/dotfiles
 
-home-manager switch -f ./home/imad/home.nix
+home-manager switch -f ./home/imad/home.nix --show-trace
 
 popd

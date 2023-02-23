@@ -1,78 +1,109 @@
-{pkgs, lib , ...}:
+{ pkgs, lib, ... }:
 
 {
 
-  
+
   programs.neovim = {
 
     enable = true;
     viAlias = true;
     withNodeJs = false;
     withRuby = false;
-    withPython3 = true;
+    withPython3 = false;
+    package = pkgs.neovim-nightly;
 
     plugins = with pkgs.vimPlugins; [
-	
-    plenary-nvim
-  	vim-nix
-    nvim-cmp
-    cmp-nvim-lsp
-    cmp-buffer
-    cmp-path
-    cmp-cmdline
-    cmp_luasnip
-    luasnip
 
-    nvim-web-devicons
-        {
-          plugin = nightfox-nvim ;
-          config = lib.fileContents ./config/colors.vim;
+      plenary-nvim
+      vim-nix
+      nim-vim
 
-        }
 
-        # tree-sitter
 
-        {
+      nvim-web-devicons
+      nightfox-nvim
 
-          plugin = nvim-treesitter;
-          config = lib.fileContents ./config/treesitter.vim;
-        }
 
-        {
-          plugin = telescope-nvim;
-          config = lib.fileContents ./config/telescope.vim;
-        }
+      nvim-treesitter
 
-        {
-          plugin = nvim-lspconfig;
-          config = lib.fileContents ./config/lsp.vim;
-        }
 
-        {
-          plugin = lualine-nvim;
-          config = lib.fileContents ./config/lualine.vim;
-        }
-        {
-          plugin = bufferline-nvim;
-          config = lib.fileContents ./config/bufferline.vim;
-        }
-        {
-          plugin = trouble-nvim;
-          config = lib.fileContents ./config/trouble.vim;
 
-        }
+      nvim-lspconfig
 
-        {
-          plugin = nvim-autopairs;
-          config = lib.fileContents ./config/autopairs.vim;
-        }
-        {
-          plugin = nvim-tree-lua;
-          config = lib.fileContents ./config/tree.vim;
-        }
+      cmp-nvim-lsp
+      cmp-buffer
+      cmp-path
+      cmp-cmdline
+      cmp_luasnip
+      friendly-snippets
+      luasnip
+      nvim-cmp
+      cmp-vsnip
+      cmp-nvim-lua
+      lspkind-nvim
+      nvim-autopairs
+
+
+      # md preview
+      {
+        plugin = glow-nvim;
+        config = lib.fileContents ./config/glow.vim;
+      }
+
+      # Telescope
+      {
+        plugin = telescope-nvim;
+        config = lib.fileContents ./config/telescope.vim;
+      }
+
+
+
+      # null-ls
+      {
+        plugin = null-ls-nvim;
+        config = lib.fileContents ./config/null_ls.vim;
+
+      }
+
+      # colorizer
+      {
+        plugin = nvim-colorizer-lua;
+        config = lib.fileContents ./config/colorizer.vim;
+      }
+
+      {
+        plugin = dressing-nvim;
+        config = lib.fileContents ./config/dressing.vim;
+      }
+      # bufferline
+      {
+        plugin = bufferline-nvim;
+        config = lib.fileContents ./config/bufferline.vim;
+      }
+      {
+        plugin = trouble-nvim;
+        config = lib.fileContents ./config/trouble.vim;
+
+      }
+
+      {
+        plugin = nvim-tree-lua;
+        config = lib.fileContents ./config/tree.vim;
+      }
+      {
+        plugin = alpha-nvim;
+        config = lib.fileContents ./config/alpha.vim;
+      }
+      {
+        plugin = lualine-nvim;
+        config = lib.fileContents ./config/lualine.vim;
+      }
+      # Haskell tools
+      haskell-tools-nvim
     ];
-    
-    extraConfig = lib.fileContents ./config/init.vim; 
+
+    # extraConfig = lib.fileContents ./config/init.vim;
+    extraLuaConfig = lib.fileContents ./config/init.lua;
 
     extraPackages = with pkgs; [
       tree-sitter
@@ -82,23 +113,8 @@
       rnix-lsp
       nixpkgs-fmt
       ltex-ls
-      nil
-
-      nodePackages_latest.typescript
-      nodePackages_latest.typescript-language-server
-      nodePackages_latest.bash-language-server
-      nodePackages_latest.vscode-langservers-extracted
-      # elm
-      elmPackages.elm-language-server
-      elmPackages.elm-verify-examples
-      elmPackages.elm-doc-preview
-      elmPackages.nodejs
-      elmPackages.elm-xref
-      elmPackages.elm-test
-      elmPackages.elm-live
-      elmPackages.elm-review
-      elmPackages.elm-format
-  
+      sumneko-lua-language-server
+      stylua
     ];
   };
 
