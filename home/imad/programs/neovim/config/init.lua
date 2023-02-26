@@ -90,6 +90,7 @@ vim.keymap.set("v", "<A-j>", "<cmd>m .+1<cr>==gv")
 
 -- save file
 vim.keymap.set({ "n", "v" }, "<leader>w", "<cmd>w<cr>", { silent = true })
+vim.keymap.set({ "n", "v" }, "<leader>qa", "<cmd>wqall<cr>", { silent = true })
 
 -------------------------------
 -- Plugins
@@ -105,8 +106,9 @@ require("nightfox").setup({
 	},
 })
 
-vim.cmd("colorscheme terafox")
-vim.g.lightline = { colorscheme = "terafox" }
+require("ayu").setup({})
+vim.cmd("colorscheme ayu")
+-- vim.g.lightline = { colorscheme = "terafox" }
 
 -- treesitter
 
@@ -117,13 +119,12 @@ require("nvim-treesitter.configs").setup({
 	ensure_installed = {
 		"elixir",
 		"lua",
-		"vim",
+		"rust",
 		"go",
 		"html",
 		"css",
 		"typescript",
 		"zig",
-		"help",
 		"nix",
 		"bash",
 		"fish",
@@ -223,9 +224,7 @@ local servers = {
 	"gopls",
 	"html",
 	"jsonls",
-	"ltex",
 	"svelte",
-	"vimls",
 	"zls",
 	"elmls",
 	"emmet_ls",
@@ -245,6 +244,16 @@ lspconfig.elixirls.setup({
 	on_attach = on_attach,
 })
 
+lspconfig.hls.setup({
+
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+lspconfig.rust_analyzer.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
 require("lspconfig").sumneko_lua.setup({
 
 	capabilities = capabilities,
@@ -500,7 +509,11 @@ null_ls.setup({ sources = sources })
 -- lualine
 -- ----------
 
-require("lualine").setup({})
+require("lualine").setup({
+	options = {
+		theme = "ayu",
+	},
+})
 
 --------------
 -- bufferline
@@ -513,3 +526,21 @@ require("bufferline").setup({})
 -- -------
 
 require("trouble").setup({})
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------

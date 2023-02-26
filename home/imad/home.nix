@@ -67,8 +67,15 @@
     librewolf
     pfetch
     fira-code
+    jq
+    lua
+    manix
+    insomnia
 
+    rustup
+    rust-analyzer
     python3
+    perl
     elixir
     erlang
     elixir_ls
@@ -78,6 +85,8 @@
     gcc
     nodejs
     stack
+
+    nmap
 
     python310Packages.jupyterlab
   ];

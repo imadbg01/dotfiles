@@ -2,7 +2,6 @@
 
 {
 
-
   programs.neovim = {
 
     enable = true;
@@ -18,15 +17,11 @@
       vim-nix
       nim-vim
 
-
-
       nvim-web-devicons
       nightfox-nvim
-
+      neovim-ayu
 
       nvim-treesitter
-
-
 
       nvim-lspconfig
 
@@ -43,12 +38,9 @@
       lspkind-nvim
       nvim-autopairs
 
-
       glow-nvim
 
       telescope-nvim
-
-
 
       null-ls-nvim
 
@@ -56,22 +48,11 @@
 
       lualine-nvim
 
-      # colorizer
-      {
-        plugin = nvim-colorizer-lua;
-        config = lib.fileContents ./config/colorizer.vim;
-      }
+      nvim-colorizer-lua
 
-      {
-        plugin = dressing-nvim;
-        config = lib.fileContents ./config/dressing.vim;
-      }
       bufferline-nvim
       trouble-nvim
 
-
-      # Haskell tools
-      haskell-tools-nvim
     ];
 
     # extraConfig = lib.fileContents ./config/init.vim;
@@ -91,6 +72,8 @@
       cbfmt
       nixfmt
       dprint
+      haskell-language-server
+      haskellPackages.hls-ormolu-plugin
     ];
   };
 
