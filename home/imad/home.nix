@@ -15,7 +15,6 @@
     ./programs/go/go.nix
     ./programs/fish/fish.nix
     ./programs/starship/starship.nix
-    ./programs/nushell/nushell.nix
   ];
 
   # xdg 
@@ -48,45 +47,35 @@
     wget
     zeal
     file
-    killall
     glow
-
+    geeqie
+    meteo
+    inxi
     vlc
     ffmpeg_5
     pitivi
     imagemagick
     simplescreenrecorder
-    digikam
     bat
     fd
-    zip
     unzip
     xclip
     ripgrep
-    bats
-    librewolf
-    pfetch
     fira-code
     jq
     lua
-    manix
-    insomnia
+    neovide
 
     rustup
     rust-analyzer
     python3
-    perl
     elixir
     erlang
     elixir_ls
-    nim
-    nimlsp
-    zig
-    gcc
     nodejs
-    stack
-
-    nmap
+    clang
+    nil
+    nixfmt
 
     python310Packages.jupyterlab
   ];

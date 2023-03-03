@@ -1,4 +1,29 @@
 ----------------------------------------------
+-- Neovide nonsense config
+
+if vim.g.neovide then 
+vim.g.guifont = "Hasklug Nerd Font Mono,Fira Code:h18"
+
+-- Helper function for transparency formatting
+local alpha = function()
+  return string.format("%x", math.floor(255 * vim.g.transparency or 0.8))
+end
+-- g:neovide_transparency should be 0 if you want to unify transparency of content and title bar.
+vim.g.neovide_transparency = 0.5
+vim.g.transparency = 0.8
+vim.g.neovide_background_color = "#0f1117" .. alpha()
+
+vim.g.neovide_floating_blur_amount_x = 2.0
+vim.g.neovide_floating_blur_amount_y = 2.0
+
+vim.g.neovide_hide_mouse_when_typing = true
+vim.g.neovide_fullscreen = true
+vim.g.neovide_profiler = false
+vim.g.neovide_cursor_vfx_mode = "torpedo"
+ 
+end
+
+--
 -- personal neovim config running on NixOs    |
 -- imad boudguige                             |
 -- 22 / 02/ 2023                              |
@@ -39,7 +64,7 @@ vim.opt.number = true -- Print line number
 vim.opt.pumblend = 10 -- Popup blend
 vim.opt.pumheight = 10 -- Maximum number of entries in a popup
 vim.opt.relativenumber = true -- Relative line numbers
-vim.opt.scrolloff = 4 -- Lines of context
+vim.opt.scrolloff = 6 -- Lines of context
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
 vim.opt.shiftround = true -- Round indent
 vim.opt.shiftwidth = 2 -- Size of an indent
@@ -107,7 +132,30 @@ require("nightfox").setup({
 })
 
 require("ayu").setup({})
-vim.cmd("colorscheme ayu")
+
+require("tokyonight").setup({
+	style = "night", --`storm`, `moon`, a darker variant `night` and `day`
+	transparent = true, -- Enable this to disable setting the background color
+	terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
+	styles = {
+		-- Style to be applied to different syntax groups
+		-- Value is any valid attr-list value for `:help nvim_set_hl`
+		comments = { italic = true },
+		keywords = { italic = true },
+		functions = {},
+		variables = {},
+		-- Background styles. Can be "dark", "transparent" or "normal"
+		sidebars = "dark", -- style for sidebars, see below
+		floats = "dark", -- style for floating windows
+	},
+	sidebars = { "qf", "help" }, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
+	day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
+	hide_inactive_statusline = false, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
+	dim_inactive = false, -- dims inactive windows
+	lualine_bold = false, -- When `true`, section headers in the lualine theme will be bold
+})
+
+vim.cmd("colorscheme tokyonight")
 -- vim.g.lightline = { colorscheme = "terafox" }
 
 -- treesitter
@@ -124,11 +172,9 @@ require("nvim-treesitter.configs").setup({
 		"html",
 		"css",
 		"typescript",
-		"zig",
 		"nix",
 		"bash",
 		"fish",
-		"toml",
 	},
 	auto_install = true,
 
@@ -136,14 +182,6 @@ require("nvim-treesitter.configs").setup({
 		-- `false` will disable the whole extension
 		enable = true,
 
-		-- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-		disable = function(lang, buf)
-			local max_filesize = 100 * 1024 -- 100 KB
-			local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-			if ok and stats and stats.size > max_filesize then
-				return true
-			end
-		end,
 
 		-- Instead of true it can also be a list of languages
 		additional_vim_regex_highlighting = false,
@@ -157,43 +195,12 @@ require("nvim-treesitter.configs").setup({
 local lspconfig = require("lspconfig")
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
--- format on save using null-ls builtin
---
-
-local lsp_formatting = function(bufnr)
-	vim.lsp.buf.format({
-		filter = function(client)
-			-- apply whatever logic you want (in this example, we'll only use null-ls)
-			return client.name == "null-ls"
-		end,
-		bufnr = bufnr,
-	})
-end
-
--- if you want to set up formatting on save, you can use this as a callback
+require("lsp-format").setup {}
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
--- Mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
-
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-	if client.supports_method("textDocument/formatting") then
-		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			group = augroup,
-			buffer = bufnr,
-			callback = function()
-				lsp_formatting(bufnr)
-			end,
-		})
-	end
+    require("lsp-format").on_attach(client)
+
 	-- Mappings.
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
@@ -216,19 +223,23 @@ local on_attach = function(client, bufnr)
 	end, bufopts)
 end
 
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local opts = { noremap = true, silent = true }
+vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
+
 local servers = {
 	"tsserver",
-	"rnix",
+	"nil_ls",
 	"cssls",
-	"bashls",
 	"gopls",
 	"html",
 	"jsonls",
 	"svelte",
-	"zls",
 	"elmls",
 	"emmet_ls",
-	"nimls",
 }
 
 for _, lsp in pairs(servers) do
@@ -244,43 +255,37 @@ lspconfig.elixirls.setup({
 	on_attach = on_attach,
 })
 
-lspconfig.hls.setup({
-
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
 lspconfig.rust_analyzer.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
-require("lspconfig").sumneko_lua.setup({
+--lspconfig.sumneko_lua.setup({
 
-	capabilities = capabilities,
-	on_attach = on_attach,
-	filetypes = { "lua" },
-	cmd = { "lua-language-server" },
-	settings = {
-		Lua = {
-			runtime = {
-				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-				version = "LuaJIT",
-			},
-			diagnostics = {
-				-- Get the language server to recognize the `vim` global
-				globals = { "vim" },
-			},
-			workspace = {
-				-- Make the server aware of Neovim runtime files
-				library = vim.api.nvim_get_runtime_file("", true),
-			},
-			-- Do not send telemetry data containing a randomized but unique identifier
-			telemetry = {
-				enable = false,
-			},
-		},
-	},
-})
+--	capabilities = capabilities,
+--	on_attach = on_attach,
+--	filetypes = { "lua" },
+--	cmd = { "lua-language-server" },
+--	settings = {
+--		Lua = {
+--			runtime = {
+--				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+--				version = "LuaJIT",
+--			},
+--			diagnostics = {
+--				-- Get the language server to recognize the `vim` global
+--				globals = { "vim" },
+--			},
+--			workspace = {
+--				-- Make the server aware of Neovim runtime files
+--				library = vim.api.nvim_get_runtime_file("", true),
+--			},
+--			-- Do not send telemetry data containing a randomized but unique identifier
+--			telemetry = {
+--				enable = false,
+--			},
+--		},
+--	},
+--}--)
 
 -------------------
 -- autocompletion
@@ -343,8 +348,8 @@ cmp.setup({
 		{ name = "path" },
 		{ name = "nvim_lua" },
 		{ name = "buffer", keyword_length = 2 },
-		{ name = "nvim_lsp", keyword_length = 1 },
-		{ name = "luasnip", keyword_length = 3 },
+		{ name = "nvim_lsp", keyword_length = 3 },
+		{ name = "luasnip", keyword_length = 2 },
 	},
 	view = {
 		entries = { name = "custom", selection_order = "near_cursor" },
@@ -391,9 +396,9 @@ local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
--- ------
--- tree
--- ------
+-- ---------
+-- neo-tree
+-- ---------
 
 -- disable netrw at the very start of your init.lua (strongly advised)
 vim.g.loaded_netrw = 1
@@ -482,36 +487,13 @@ require("glow").setup({
 	height_ratio = 0.7,
 })
 
------------------
--- null-ls
--- --------------
-
-local null_ls = require("null-ls")
-
--- register any number of sources simultaneously
-local sources = {
-	null_ls.builtins.formatting.tidy,
-	null_ls.builtins.formatting.stylelint,
-	null_ls.builtins.diagnostics.write_good,
-	null_ls.builtins.formatting.dprint,
-	null_ls.builtins.formatting.stylua,
-	null_ls.builtins.formatting.cbfmt,
-	null_ls.builtins.formatting.fish_indent,
-	null_ls.builtins.formatting.gofmt,
-	null_ls.builtins.formatting.mix,
-	null_ls.builtins.formatting.nimpretty,
-	null_ls.builtins.formatting.nixfmt,
-}
-
-null_ls.setup({ sources = sources })
-
 -------------
 -- lualine
 -- ----------
 
 require("lualine").setup({
 	options = {
-		theme = "ayu",
+		theme = "tokyonight",
 	},
 })
 
@@ -527,6 +509,227 @@ require("bufferline").setup({})
 
 require("trouble").setup({})
 
+
+--------------
+-- gitsigns
+-- -----------
+require("gitsigns").setup()
+
+--------------
+-- notify
+-- -----------
+require('notify').setup({
+  background_colour = "#000000",
+})
+vim.notify = require('notify')
+
+
+------------
+-- noice 
+-- ---------
+require("noice").setup({
+  lsp = {
+    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+    override = {
+      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+      ["vim.lsp.util.stylize_markdown"] = true,
+      ["cmp.entry.get_documentation"] = true,
+    },
+  },
+  -- you can enable a preset for easier configuration
+  presets = {
+    bottom_search = true, -- use a classic bottom cmdline for search
+    command_palette = true, -- position the cmdline and popupmenu together
+    long_message_to_split = true, -- long messages will be sent to a split
+    inc_rename = false, -- enables an input dialog for inc-rename.nvim
+    lsp_doc_border = false, -- add a border to hover docs and signature help
+  },
+})
+
+
+-------------
+-- dressing
+-------------
+--
+require('dressing').setup({
+  input = {
+    -- Set to false to disable the vim.ui.input implementation
+    enabled = true,
+
+    -- Default prompt string
+    default_prompt = "Input:",
+
+    -- Can be 'left', 'right', or 'center'
+    prompt_align = "left",
+
+    -- When true, <Esc> will close the modal
+    insert_only = true,
+
+    -- When true, input will start in insert mode.
+    start_in_insert = true,
+
+    -- These are passed to nvim_open_win
+    anchor = "SW",
+    border = "rounded",
+    -- 'editor' and 'win' will default to being centered
+    relative = "cursor",
+
+    -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+    prefer_width = 40,
+    width = nil,
+    -- min_width and max_width can be a list of mixed types.
+    -- min_width = {20, 0.2} means "the greater of 20 columns or 20% of total"
+    max_width = { 140, 0.9 },
+    min_width = { 20, 0.2 },
+
+    buf_options = {},
+    win_options = {
+      -- Window transparency (0-100)
+      winblend = 10,
+      -- Disable line wrapping
+      wrap = false,
+    },
+
+    -- Set to `false` to disable
+    mappings = {
+      n = {
+        ["<Esc>"] = "Close",
+        ["<CR>"] = "Confirm",
+      },
+      i = {
+        ["<C-c>"] = "Close",
+        ["<CR>"] = "Confirm",
+        ["<Up>"] = "HistoryPrev",
+        ["<Down>"] = "HistoryNext",
+      },
+    },
+
+    override = function(conf)
+      -- This is the config that will be passed to nvim_open_win.
+      -- Change values here to customize the layout
+      return conf
+    end,
+
+    -- see :help dressing_get_config
+    get_config = nil,
+  },
+  select = {
+    -- Set to false to disable the vim.ui.select implementation
+    enabled = true,
+
+    -- Priority list of preferred vim.select implementations
+    backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" },
+
+    -- Trim trailing `:` from prompt
+    trim_prompt = true,
+
+    -- Options for telescope selector
+    -- These are passed into the telescope picker directly. Can be used like:
+    -- telescope = require('telescope.themes').get_ivy({...})
+    telescope = nil,
+
+    -- Options for fzf selector
+    fzf = {
+      window = {
+        width = 0.5,
+        height = 0.4,
+      },
+    },
+
+    -- Options for fzf_lua selector
+    fzf_lua = {
+      winopts = {
+        width = 0.5,
+        height = 0.4,
+      },
+    },
+
+    -- Options for nui Menu
+    nui = {
+      position = "50%",
+      size = nil,
+      relative = "editor",
+      border = {
+        style = "rounded",
+      },
+      buf_options = {
+        swapfile = false,
+        filetype = "DressingSelect",
+      },
+      win_options = {
+        winblend = 10,
+      },
+      max_width = 80,
+      max_height = 40,
+      min_width = 40,
+      min_height = 10,
+    },
+
+    -- Options for built-in selector
+    builtin = {
+      -- These are passed to nvim_open_win
+      anchor = "NW",
+      border = "rounded",
+      -- 'editor' and 'win' will default to being centered
+      relative = "editor",
+
+      buf_options = {},
+      win_options = {
+        -- Window transparency (0-100)
+        winblend = 10,
+      },
+
+      -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+      -- the min_ and max_ options can be a list of mixed types.
+      -- max_width = {140, 0.8} means "the lesser of 140 columns or 80% of total"
+      width = nil,
+      max_width = { 140, 0.8 },
+      min_width = { 40, 0.2 },
+      height = nil,
+      max_height = 0.9,
+      min_height = { 10, 0.2 },
+
+      -- Set to `false` to disable
+      mappings = {
+        ["<Esc>"] = "Close",
+        ["<C-c>"] = "Close",
+        ["<CR>"] = "Confirm",
+      },
+
+      override = function(conf)
+        -- This is the config that will be passed to nvim_open_win.
+        -- Change values here to customize the layout
+        return conf
+      end,
+    },
+
+    -- Used to override format_item. See :help dressing-format
+    format_item_override = {},
+
+    -- see :help dressing_get_config
+    get_config = nil,
+  },
+})
+
+
+------------
+-- colorizer
+-- ---------
+
+  require("colorizer").setup {
+      filetypes = { "css", "javascript" },
+      user_default_options = {
+        names = true, -- "Name" codes like Blue or blue
+        rgb_fn = true, -- CSS rgb() and rgba() functions
+        hsl_fn = true, -- CSS hsl() and hsla() functions
+        -- Available modes for `mode`: foreground, background,  virtualtext
+        mode = "virtualtext", -- Set the display mode.
+        tailwind = false, -- Enable tailwind colors
+        virtualtext = "■",
+      },
+      -- all the sub-options of filetypes apply to buftypes
+      buftypes = {},
+  }
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

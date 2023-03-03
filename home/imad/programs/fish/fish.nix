@@ -10,6 +10,14 @@
       es = "emacsclient -c -a emacs";
     };
 
+    functions = {
+
+      mvco = {
+        description = "mark the challenge as complete";
+        body = "mv $argv{, _COMPLETE}"; 
+      };
+    };
+
     plugins =  [
     ];
   };

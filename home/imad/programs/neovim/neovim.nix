@@ -15,15 +15,16 @@
 
       plenary-nvim
       vim-nix
-      nim-vim
 
       nvim-web-devicons
       nightfox-nvim
       neovim-ayu
+      tokyonight-nvim
 
       nvim-treesitter
 
       nvim-lspconfig
+      lsp-format-nvim
 
       cmp-nvim-lsp
       cmp-buffer
@@ -42,8 +43,6 @@
 
       telescope-nvim
 
-      null-ls-nvim
-
       nvim-tree-lua
 
       lualine-nvim
@@ -51,29 +50,24 @@
       nvim-colorizer-lua
 
       bufferline-nvim
+
+      nvim-notify
+      noice-nvim
+      nui-nvim
+      dressing-nvim
+
+      gitsigns-nvim
+      diffview-nvim
+
       trouble-nvim
 
     ];
 
     # extraConfig = lib.fileContents ./config/init.vim;
     extraLuaConfig = lib.fileContents ./config/init.lua;
-
     extraPackages = with pkgs; [
       tree-sitter
-      ripgrep
       gopls
-      zls
-      rnix-lsp
-      ltex-ls
-      sumneko-lua-language-server
-      stylua
-      html-tidy
-      nodePackages.stylelint
-      cbfmt
-      nixfmt
-      dprint
-      haskell-language-server
-      haskellPackages.hls-ormolu-plugin
     ];
   };
 

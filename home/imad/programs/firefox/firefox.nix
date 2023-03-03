@@ -1,7 +1,6 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 
 {
-
 
   programs.firefox = {
     enable = true;
@@ -11,13 +10,12 @@
         DisablePocket = true;
         DisableTelemtry = true;
 
-
-
       };
-      extraNativeMessagingHosts = with pkgs.nur.repos.wolfangaukang; [ vdhcoapp ];
+      extraNativeMessagingHosts = with pkgs.nur.repos.wolfangaukang;
+        [ vdhcoapp ];
     };
   };
 
-    home.packages = with pkgs.nur.repos.wolfangaukang; [ vdhcoapp ];
+  home.packages = with pkgs.nur.repos.wolfangaukang; [ vdhcoapp ];
 
 }

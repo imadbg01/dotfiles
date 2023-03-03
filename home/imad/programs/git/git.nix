@@ -1,9 +1,8 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 
 {
 
   programs.git = {
-
     enable = true;
     userName = "imad";
     userEmail = "imadbg01@users.noreply.github.com";
@@ -14,31 +13,22 @@
 
     };
 
-
-    
     attributes = [
 
       "*.pdf diff=pdf"
 
-
     ];
 
-
-    
     diff-so-fancy = {
 
       enable = false;
-
 
     };
 
     difftastic = {
       enable = false;
 
-
     };
-
-
 
   };
 
